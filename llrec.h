@@ -83,7 +83,31 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
+    // Base case: empty list
+    if (head == nullptr) {
+        return nullptr;
+    }
 
+    //recuresively filter rest of list
+    Node* filteredRest = llfilter(head->next, pred);
+    
+    // Check if current node should be filtered out
+    if (pred(head->val)) {
+        // Current node should be removed
+        // Set its next pointer to nullptr to avoid potential issues
+        head->next = nullptr;
+        // Deallocate the current node
+        delete head;
+        // Return the filtered rest of the list
+        return filteredRest;
+    } 
+    else {
+        // Current node stays in the list
+        // Connect it to the filtered rest of the list
+        head->next = filteredRest;
+        // Return the current node as the new head
+        return head;
+    }
 
 }
 

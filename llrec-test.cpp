@@ -86,6 +86,50 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
+    // Test llpivot function
+    cout << "\nTesting llpivot with pivot = 10:" << endl;
+    Node* smaller = nullptr;
+    Node* larger = nullptr;
+    int pivot = 10;
+    
+    // Make a copy of the original list for llpivot
+    Node* head_copy = readList(argv[1]);
+    
+    cout << "Before pivot - Original list: ";
+    print(head_copy);
+    
+    llpivot(head_copy, smaller, larger, pivot);
+    
+    cout << "After pivot - head should be empty: ";
+    print(head_copy);
+    cout << "Smaller list (values <= " << pivot << "): ";
+    print(smaller);
+    cout << "Larger list (values > " << pivot << "): ";
+    print(larger);
+    
+    // Clean up the smaller and larger lists
+    dealloc(smaller);
+    dealloc(larger);
+    
+    // Define a predicate for llfilter
+    // This example removes even numbers
+    struct IsEven {
+        bool operator()(int value) { return value % 2 == 0; }
+    };
+    
+    cout << "\nTesting llfilter (removing even numbers):" << endl;
+    cout << "Before filter: ";
+    print(head);
+    
+    head = llfilter(head, IsEven());
+    
+    cout << "After filter (odd numbers only): ";
+    print(head);
+    
+    // Clean up
+    dealloc(head);
+    
+    return 0;
 
 
 
